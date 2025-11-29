@@ -54,12 +54,16 @@ function createHeaders() {
 function getErrorMessage(error) {
     let errorMessage = 'Network error';
 
+    if (error.message.includes('Failed to fetch')) {
+        return 'Failed to connect to the server.';
+    }
+
+    if (error instanceof SyntaxError) {
+        return 'Response was not valid JSON.';
+    }
+
     if (error instanceof TypeError) {
-        errorMessage = 'There was an issue with the request or network connection.';
-    } else if (error instanceof SyntaxError) {
-        errorMessage = 'Response was not valid JSON.';
-    } else if (error.message.includes('Failed to fetch')) {
-        errorMessage = 'Failed to connect to the server.';
+        return 'There was an issue with the request or network connection.';
     }
 
     return errorMessage;
@@ -106,6 +110,9 @@ async function postData(endpoint, data) {
         };
 
     } catch (error) {
+        console.log(error);
+        console.log(error.message);
+        console.log(error.message.includes('Failed to fetch'));
         const errorMessage = getErrorMessage(error);
         return {
             ok: false,

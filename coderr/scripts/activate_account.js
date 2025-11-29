@@ -185,13 +185,12 @@ async function forgotPasswordSubmit(event) {
 async function forgetPassword(data) {
     let response = await postData(FORGET_PASSWORD_URL, data);
     if (!response.ok) {
-        //setError(true, "forgot_email_group");
-        //let errorArr = extractErrorMessages(response.data);
-        //showToastMessage(true, errorArr);
+        let errorArr = extractMessages(response.data);
+        showToastMessage(true, errorArr);
         console.log(response.data, response.ok);
     } else {
-        //showToastAndRedirect(false, ["Password reset email sent! Please check your inbox."], "../auth/login.html", TOAST_DURATION);
+        let sucessrArr = extractMessages(response.data);
+        showToastMessage(true, sucessrArr);
         console.log(response.data);
     }
 }
-//test

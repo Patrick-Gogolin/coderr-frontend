@@ -164,23 +164,22 @@ function getToastHTML(msg, error) {
             </div>`
 }
 
-function extractErrorMessages(errorObject) {
-    let errorMessages = [];
+function extractMessages(object) {
+    let messages = [];
 
-    for (let key in errorObject) {
-        if (errorObject.hasOwnProperty(key)) {
-            const value = errorObject[key];
+    for (let key in object) {
+        if (object.hasOwnProperty(key)) {
+            const value = object[key];
             if (typeof value === 'object' && value !== null) {
-                errorMessages = errorMessages.concat(extractErrorMessages(value));
+                messages = messages.concat(extractMessages(value));
             } else {
-                errorMessages = errorMessages.concat(value);
+                messages = messages.concat(value);
             }
         }
     }
 
-    return errorMessages;
+    return messages;
 }
-
 
 function toggleReviewAddBtn() {
     if (currentUser.type == "business") {
